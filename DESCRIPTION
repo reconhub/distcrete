@@ -1,0 +1,13 @@
+Package: distcrete
+Title: Disrcrete Distribution Approximations
+Version: 0.0.1
+Author: Rich FitzJohn
+Maintainer: Rich FitzJohn <rich.fitzjohn@gmail.com>
+Description: Discrete approximations of continuous distributions.
+License: MIT + file LICENSE
+LazyData: true
+URL: https://github.com/reconhub/distcrete
+BugReports: https://github.com/reconhub/distcrete/issues
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
