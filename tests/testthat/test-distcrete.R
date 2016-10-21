@@ -20,7 +20,6 @@ test_that("basic", {
 test_that("boundary conditions", {
   dx <- 0.1
   x <- seq(0, 1, by = dx)
-  w <- 0
   for (w in c(0, 0.5, 1)) {
     d <- distcrete("unif", dx, w = w)
     p <- d$d(x)
@@ -52,7 +51,6 @@ test_that("boundary conditions", {
 test_that("invertability of uniform", {
   dx <- 0.1
   x <- seq(0, 1, by = dx)
-  w <- 0
   for (w in c(0, 0.5, 1)) {
     d <- distcrete("unif", dx, w = w)
     px <- d$p(x)
@@ -68,6 +66,25 @@ test_that("invertability of uniform", {
       expect_equal(d$p(d$q(px)), px)
     }
   }
+})
+
+test_that("out of bounds", {
+  dx <- 0.1
+  x <- seq(0, 1, by = dx)
+  w <- 0
+  d <- distcrete("unif", dx, w = w)
+
+  ## The CDF is defined over the whole interval
+  expect_equal(d$p(-1), 0) # same as punif(-1)
+  expect_equal(d$p(2), 1) # same as punif(2)
+
+  ## The PDF is also defined over this interval
+  expect_equal(d$d(-1), 0) # same as dunif(-1)
+  expect_equal(d$d(2), 0) # same as dunif(2)
+
+  ## The quantile function is not though
+  expect_equal(suppressWarnings(d$q(-1)), NaN) # same as qunif(-1)
+  expect_equal(suppressWarnings(d$q(2)), NaN) # same as dunif(2)
 })
 
 test_that("print method, no args", {
