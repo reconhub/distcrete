@@ -99,6 +99,16 @@ test_that("strict mode", {
                "Values do not align")
 })
 
+test_that("random number generation", {
+  dx <- 0.1
+  x <- seq(0, 1, by = dx)
+  w <- 0
+  d <- distcrete("unif", dx, w = w)
+  z <- d$r(1000)
+  expect_true(all(z %in% x))
+  expect_equal(range(z), c(0, 0.9))
+})
+
 test_that("print method, no args", {
   d <- distcrete("norm", 1)
   capture.output(expect_identical(d, print(d)))
