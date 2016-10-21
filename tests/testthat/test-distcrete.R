@@ -72,7 +72,7 @@ test_that("invertability of uniform", {
 
 test_that("print method, no args", {
   d <- distcrete("norm", 1)
-  expect_identical(d, print(d))
+  capture.output(expect_identical(d, print(d)))
   str <- capture.output(print(d))
   expect_match(str, "name: norm", all = FALSE)
   expect_match(str, "with no parameters", all = FALSE)
@@ -80,7 +80,7 @@ test_that("print method, no args", {
 
 test_that("print method, withargs", {
   d <- distcrete("norm", 1, mean = 1)
-  expect_identical(d, print(d))
+  capture.output(expect_identical(d, print(d)))
   str <- capture.output(print(d))
   expect_match(str, "name: norm", all = FALSE)
   expect_match(str, "mean: 1", all = FALSE)
