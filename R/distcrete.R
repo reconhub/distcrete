@@ -106,8 +106,10 @@ print.distcrete <- function(x, ...) {
   invisible(x)
 }
 
+## TODO: find a reference for this bit of hackery:
 log_minus <- function(lx, ly) {
-  lx + log1p(- exp(ly - lx))
+  dyx <- ly - lx
+  lx + ifelse(dyx > -log(2), log(-expm1(dyx)), log1p(-exp(dyx)))
 }
 
 ## This is going to be the workhorse for re-relating continuous 'x'

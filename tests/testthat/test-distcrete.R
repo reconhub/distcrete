@@ -109,6 +109,27 @@ test_that("random number generation", {
   expect_equal(range(z), c(0, 0.9))
 })
 
+test_that("logspace", {
+  shape <- 3
+  rate <- 1.15
+  d <- distcrete("gamma", 1, shape, rate, w = 0)
+  x <- seq(0, 20, by = d$interval)
+
+  expect_equal(d$d(x, log = TRUE), log(d$d(x)))
+
+  ## Step it out to bigger values and see if we can help:
+  xx <- c(20, 30, 40, 50)
+
+  p <- d$d(xx, log = TRUE)
+  expect_true(all(is.finite(p)))
+  expect_true(all(p < dgamma(xx, shape, rate, log = TRUE)))
+
+  p2 <- d$d(xx)
+  i <- p2 == 0
+  expect_true(any(i))
+  expect_equal(exp(p[!i]), p2[!i])
+})
+
 test_that("print method, no args", {
   d <- distcrete("norm", 1)
   capture.output(expect_identical(d, print(d)))
