@@ -42,9 +42,9 @@ distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
             ## offset = 0,
             ## reverse = FALSE,
             parameters = list(...))
-  d$d <- function(x, log = FALSE) distcrete_d(d, x, log)
-  d$p <- function(q, log = FALSE) distcrete_p(d, q, log)
-  d$q <- function(p, log = FALSE) distcrete_q(d, p, log)
+  d$d <- function(x, log = FALSE, strict = FALSE) distcrete_d(d, x, log, strict)
+  d$p <- function(q, log = FALSE, strict = FALSE) distcrete_p(d, q, log, strict)
+  d$q <- function(p, log = FALSE, strict = FALSE) distcrete_q(d, p, log, strict)
   d$r <- function(n = 1) distcrete_r(d, n)
   d$name <- name
   class(d) <- "distcrete"
@@ -55,7 +55,6 @@ distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
 ## I think that we do want to get this for a given anchor.
 distcrete_d <- function(d, x, log = FALSE, strict = FALSE) {
   check_interval(x, d$anchor, d$interval, d$w, strict)
-
   x0 <- x - d$w * d$interval
   p0 <- d$cdf(x0, log)
   p1 <- d$cdf(x0 + d$interval, log)
@@ -69,7 +68,6 @@ distcrete_d <- function(d, x, log = FALSE, strict = FALSE) {
 ## TODO: make the argument log.p rather than log?
 distcrete_p <- function(d, q, log = FALSE, strict = FALSE) {
   check_interval(q, d$anchor, d$interval, d$w, strict)
-
   d$cdf(q - d$w * d$interval, log)
 }
 
@@ -77,11 +75,9 @@ distcrete_p <- function(d, q, log = FALSE, strict = FALSE) {
 ##
 ## NOTE: can get catastrophic information loss on semi-infinite
 ## distributions with big w
-distcrete_q <- function(d, p, log = FALSE) {
+distcrete_q <- function(d, p, log = FALSE, strict = FALSE) {
   x <- d$qf(p, log)
-
-  n <- find_interval(x, d$anchor, d$interval, d$w, FALSE)
-  d$anchor + n * d$interval # + d$w ?
+  find_interval(x, d$anchor, d$interval, d$w, strict)
 }
 
 distcrete_r <- function(d, n = 1, ...) {

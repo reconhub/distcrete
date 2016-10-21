@@ -15,6 +15,61 @@ test_that("basic", {
   }
 })
 
+## With a uniform distribution it should be pretty easy to work with
+## this:
+test_that("boundary conditions", {
+  dx <- 0.1
+  x <- seq(0, 1, by = dx)
+  w <- 0
+  for (w in c(0, 0.5, 1)) {
+    d <- distcrete("unif", dx, w = w)
+    p <- d$d(x)
+    expect_equal(sum(p), 1)
+    n <- length(p)
+    i <- c(1, n)
+    expect_equal(p[-i], rep(dx, n - 2))
+    if (w == 0) {
+      pi <- c(dx, 0)
+    } else if (w == 0.5) {
+      pi <- c(dx, dx) / 2
+    } else {
+      pi <- c(0, dx)
+    }
+    expect_equal(p[i], pi)
+
+    ## As above, for the gamma case:
+    px <- d$p(x)
+    if (w < 1) {
+      expect_equal(d$q(px), x)
+    } else {
+      expect_equal(d$q(px), c(dx, x[-1]))
+    }
+    expect_equal(d$p(d$q(px)), px)
+  }
+})
+
+## With an interval != 1, things are tricky:
+test_that("invertability of uniform", {
+  dx <- 0.1
+  x <- seq(0, 1, by = dx)
+  w <- 0
+  for (w in c(0, 0.5, 1)) {
+    d <- distcrete("unif", dx, w = w)
+    px <- d$p(x)
+    if (w < 1) {
+      expect_equal(d$q(x), x)
+      expect_equal(d$p(d$q(px)), px)
+    } else {
+      ## The lossyness of the first test makes me think that w should
+      ## not be able to be 1 exactly, but should be limited to be '1 -
+      ## eps'
+      px <- d$p(x)
+      expect_equal(d$q(px), c(0.1, x[-1]))
+      expect_equal(d$p(d$q(px)), px)
+    }
+  }
+})
+
 test_that("print method, no args", {
   d <- distcrete("norm", 1)
   expect_identical(d, print(d))
