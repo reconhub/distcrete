@@ -1,6 +1,5 @@
 assert_in_range <- function(x, min, max, name = deparse(substitute(x))) {
-  assert_scalar(x)
-  assert_numeric(x)
+  assert_scalar_numeric(x, name)
   if (x < min || x > max) {
     stop(sprintf("%s must be in range [%s, %s]", name, min, max))
   }
@@ -33,4 +32,5 @@ assert_function <- function(x, name=deparse(substitute(x))) {
 assert_scalar_numeric <- function(x, name = deparse(substitute(x))) {
   assert_scalar(x, name)
   assert_numeric(x, name)
+  assert_nonmissing(x, name)
 }
