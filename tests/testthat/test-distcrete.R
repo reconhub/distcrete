@@ -87,6 +87,18 @@ test_that("out of bounds", {
   expect_equal(suppressWarnings(d$q(2)), NaN) # same as dunif(2)
 })
 
+test_that("strict mode", {
+  dx <- 0.1
+  x <- seq(0, 1, by = dx)
+  w <- 0
+  d <- distcrete("unif", dx, w = w)
+
+  expect_error(d$p(dx / 2, strict = TRUE),
+               "Values do not align")
+  expect_error(d$d(dx / 2, strict = TRUE),
+               "Values do not align")
+})
+
 test_that("print method, no args", {
   d <- distcrete("norm", 1)
   capture.output(expect_identical(d, print(d)))

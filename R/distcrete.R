@@ -44,7 +44,7 @@ distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
             parameters = list(...))
   d$d <- function(x, log = FALSE, strict = FALSE) distcrete_d(d, x, log, strict)
   d$p <- function(q, log = FALSE, strict = FALSE) distcrete_p(d, q, log, strict)
-  d$q <- function(p, log = FALSE, strict = FALSE) distcrete_q(d, p, log, strict)
+  d$q <- function(p, log = FALSE) distcrete_q(d, p, log)
   d$r <- function(n = 1) distcrete_r(d, n)
   d$name <- name
   class(d) <- "distcrete"
@@ -75,9 +75,9 @@ distcrete_p <- function(d, q, log = FALSE, strict = FALSE) {
 ##
 ## NOTE: can get catastrophic information loss on semi-infinite
 ## distributions with big w
-distcrete_q <- function(d, p, log = FALSE, strict = FALSE) {
+distcrete_q <- function(d, p, log = FALSE) {
   x <- d$qf(p, log)
-  find_interval(x, d$anchor, d$interval, d$w, strict)
+  find_interval(x, d$anchor, d$interval, d$w, FALSE)
 }
 
 distcrete_r <- function(d, n = 1, ...) {
