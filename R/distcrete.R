@@ -46,6 +46,7 @@ distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
   d$p <- function(q, log = FALSE) distcrete_p(d, q, log)
   d$q <- function(p, log = FALSE) distcrete_q(d, p, log)
   d$r <- function(n = 1) distcrete_r(d, n)
+  d$name <- name
   class(d) <- "distcrete"
   d
 }
@@ -90,6 +91,23 @@ distcrete_r <- function(d, n = 1, ...) {
 ##' @export
 print.distcrete <- function(x, ...) {
   cat("A discrete distribution\n")
+  cat(sprintf("  name: %s\n", x$name))
+  p <- x$parameters
+  ## This might collect a few too many parameters, but will at least
+  ## capture defaults.
+  if (is.null(names(p)) || !all(nzchar(names(p)))) {
+    f <- environment(x$cdf)$cdf
+    p <- as.list(match.call(f, as.call(c(list(quote(f)), list(1), p))))[-(1:2)]
+  }
+  if (length(p) == 0L) {
+    cat("  <with no parameters>\n")
+  } else {
+    cat(sprintf("  parameters:\n"))
+    to_str <- function(x) if (length(x) == 1) as.character(x) else ""
+    cat(sprintf("    %s: %s\n", names(p), vapply(p, to_str, character(1))),
+        sep="")
+  }
+  invisible(x)
 }
 
 log_minus <- function(lx, ly) {
