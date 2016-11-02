@@ -36,14 +36,6 @@ check:
 check_all:
 	${RSCRIPT} -e "rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual'))"
 
-clean:
-	rm -f src/*.o src/*.so src/*.dll
-	rm -f tests/testthat/*.o tests/testthat/*.so tests/testthat/*.dll
-	rm -f inst/examples/*.o inst/examples/*.so inst/examples/*.dll
-	rm -rf src/dde.so.dSYM
-	rm -rf tests/testthat/*.so.dSYM
-	rm -rf inst/examples/*.so.dSYM
-
 README.md: README.Rmd
 	Rscript -e "options(warnPartialMatchArgs=FALSE); knitr::knit('$<')"
 	sed -i.bak 's/[[:space:]]*$$//' README.md
@@ -57,7 +49,7 @@ vignettes/%.Rmd: vignettes/src/%.R
 ## This will eventually swap out for devtools::build_vignettes(), but
 ## in current version it's not working when offline.  For now I'll
 ## just do the copy manually.
-vignettes: vignettes/dde.Rmd
+vignettes: vignettes/distcrete.Rmd
 	${RSCRIPT} -e 'tools::buildVignettes(dir = ".")'
 	mkdir -p inst/doc
 	cp vignettes/*.html vignettes/*.Rmd inst/doc
