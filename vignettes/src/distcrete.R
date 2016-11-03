@@ -88,6 +88,64 @@ sum(d1$d(0:100))
 ## The cumulative density function (CDF) is key to all calculations
 ## throughout.
 
+## We follow R's lead on naturally discrete distributions
+## (e.g. Poisson) and define the cdf as the cumulative probability at
+## x as the probability up to *and including* x.  So this is simply,
+## for an aligned `x` value this is the cdf of the underlying
+## distribution up to `x + (1 - w) * interval`.
+
+## So with `w = 1`, the regions integrated are coloured below; for the
+## cumulative density we integrate from -Inf to the line *above* the
+## point of interest.
+
+##+ echo = FALSE
+par(mar=c(4.1, 4.1, 0.5, 0.5))
+curve(dgamma(x, 3), 0, 10, n = 301, col = NA,
+      xlab = "x", ylab = "Probability density", las = 1)
+at <- 0:10
+cols <- colorRampPalette(c("navy", "dodgerblue2"))(length(at))
+for (i in seq_along(at)[-1]) {
+  xx <- seq(at[i - 1], at[i], length.out = 21)
+  polygon(c(xx, rev(xx)),
+          c(dgamma(xx, 3), rep(0, length(xx))), col = cols[i],
+          border = "grey")
+}
+curve(dgamma(x, 3), 0, 10, n = 301, add = TRUE)
+
+## and with `w = 0.5`
+##+ echo = FALSE
+par(mar=c(4.1, 4.1, 0.5, 0.5))
+curve(dgamma(x, 3), 0, 10, n = 301, col = NA,
+      xlab = "x", ylab = "Probability density", las = 1)
+at <- c(0, 0:9 + 0.5, 10)
+cols <- colorRampPalette(c("navy", "dodgerblue2"))(length(at))
+for (i in seq_along(at)[-1]) {
+  xx <- seq(at[i - 1], at[i], length.out = 21)
+  polygon(c(xx, rev(xx)),
+          c(dgamma(xx, 3), rep(0, length(xx))), col = cols[i],
+          border = "grey")
+}
+curve(dgamma(x, 3), 0, 10, n = 301, add = TRUE)
+
+## The nice thing about this is we can do these calculation without
+## doing any integration; these follow directly from the cumulative
+## density function of the underlying continuous distribution
+
+par(mar=c(4.1, 4.1, 0.5, 0.5))
+curve(pgamma(x, 3), 0, 10, n = 301, col = NA,
+      xlab = "x", ylab = "Cumulative probability", las = 1)
+at <- 0:10
+cols <- colorRampPalette(c("navy", "dodgerblue2"))(length(at))
+for (i in seq_along(at)[-1]) {
+  xx <- seq(at[i - 1], at[i], length.out = 21)
+  polygon(c(xx, rev(xx)),
+          c(pgamma(xx, 3), rep(0, length(xx))), col = cols[i],
+          border = "grey")
+}
+curve(pgamma(x, 3), 0, 10, n = 301, add = TRUE)
+
+## (this is with `w = 0`)
+
 ## ### Probability density function to probability mass function
 
 ## We have an underlying continuous distribution with a known
