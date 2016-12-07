@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 inst/doc
+inst/web
 vignettes/*.html
