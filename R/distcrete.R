@@ -54,6 +54,8 @@ distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
 ## The nice thing about this is that it holds for _all_ offsets.  But
 ## I think that we do want to get this for a given anchor.
 distcrete_d <- function(d, x, log = FALSE, strict = FALSE) {
+  ## TODO: what is the logic here?  This seems like a 1st order
+  ## appoximation perhaps?  Worth documenting this properly somewhere
   check_interval(x, d$anchor, d$interval, d$w, strict)
   x0 <- x - d$w * d$interval
   p0 <- d$cdf(x0, log)
@@ -68,20 +70,19 @@ distcrete_d <- function(d, x, log = FALSE, strict = FALSE) {
 ## TODO: make the argument log.p rather than log?
 distcrete_p <- function(d, q, log = FALSE, strict = FALSE) {
   check_interval(q, d$anchor, d$interval, d$w, strict)
-  d$cdf(q - d$w * d$interval, log)
+  d$cdf(q + (1 - d$w) * d$interval, log)
 }
 
-## TODO: make a %/% function that does this "safely"
-##
-## NOTE: can get catastrophic information loss on semi-infinite
-## distributions with big w
+## TODO: I'm still not 100% sure about the -1 here!
 distcrete_q <- function(d, p, log = FALSE) {
   x <- d$qf(p, log)
-  find_interval(x, d$anchor, d$interval, d$w, FALSE)
+  find_interval(x, d$anchor, d$interval, d$w, FALSE) - d$interval
 }
 
+## TODO: consider a lower/uppper argument to _q so that this
+## (+interval-interval) bit can be avoided...
 distcrete_r <- function(d, n = 1, ...) {
-  distcrete_q(d, runif(n))
+  distcrete_q(d, runif(n)) + d$interval
 }
 
 ##' @export

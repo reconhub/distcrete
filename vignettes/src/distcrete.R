@@ -77,6 +77,7 @@ r <- barplot(rbind(y0, y1), names.arg = 0:10, beside = TRUE,
 legend("topright", c("w = 0", "w = 0.5"), bty = "n", fill = col)
 
 ## Summed over all 'x', these two distributions will both equal 1
+## (using 100 as "close enough" to infinity here)
 sum(d0$d(0:100))
 sum(d1$d(0:100))
 
