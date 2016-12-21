@@ -1,0 +1,109 @@
+---
+title: "ML estimation with distcrete"
+author: "Thibaut Jombart"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{distcrete_ML}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+``` {r echo = FALSE, results = "hide"}
+knitr::opts_chunk$set(
+  error = FALSE,
+  fig.width = 7,
+  fig.height = 5)
+set.seed(1)
+```
+
+In this vignette, we illustrate how *distcrete* can be combined with classical optimisation procedures available in R to derive maximum-likelihood (ML) of parameters of distributions of interest. We simulate simple data from a discretised exponential distribution, and then attempt to recover the original parameters using ML.
+
+
+## Simulating data
+
+Simulating data from a discretised distribution is very easy using *distcrete*, as discretised distributions already contain a random variate generator in the `$r` component. We illustrate this by generating a discretised exponential distribution `x` with rate parameter 0.123:
+```{r}
+library(distcrete)
+rate <- 0.123
+plot(function(x) dexp(x, rate), xlim = c(0, 60),
+     main = "Original Exponential distribution")
+x <- distcrete("exp", interval = 1L, rate)
+x$r
+```
+
+We simulate 200 draws from the distribution `x`:
+```{r, simulation}
+set.seed(1)
+sim <- x$r(200)
+head(sim)
+summary(sim)
+plot(table(sim), lwd=3, xlab = "x", ylab = "Frequency",
+     main = "Simulated sample")
+```
+
+
+
+## ML estimation
+
+We will use the base function `optim` to find maximum likelihood estimates of the shape and the rate of the distribution `x`. The log-likelihood function to be optimised can be written as:
+```{r, target}
+ll <- function(param) {
+   d <- distcrete("exp", interval = 1L, param)$d
+   sum(d(sim, log = TRUE))
+}
+```
+
+For instance, the log-likelihood with shapes and rates of 1 can be computed as:
+```{r, ll_example}
+param <- c(rate = 1)
+ll(param)
+```
+
+
+We can feed this function and initial parameters to `optim`:
+```{r, optimise}
+opt <- optimise(ll, c(0, 20), maximum = TRUE)
+opt
+```
+
+The ML estimate for the rate of the distribution is `r opt$maximum`, which is close enough to the original value of `r rate`.
+
+
+
+
+## Discretised gamma example
+
+We repeat the same exercise with a gamma distribution. The only difference with the previous example is that `optim` needs to be used, as the parameter space now has 2 dimensions.
+
+We start by simulating a sample from a discretised gamma distribution:
+```{r, gamma}
+shape <- 2.5
+rate <- 0.6
+y <- distcrete("gamma", interval = 1L, shape, rate)
+set.seed(1)
+sim2 <- y$r(200)
+
+head(sim2)
+summary(sim2)
+plot(table(sim2), lwd=3, xlab = "x", ylab = "Frequency",
+     main = "Simulated sample")
+
+```
+
+We create a log-likelihood function for these data, as well as a deviance (it is easier to minimise the deviance with `optim`):
+```{r, ll_gamma}
+ll2 <- function(param) {
+   d <- distcrete("gamma", interval = 1L, param[1], param[2])$d
+   sum(d(sim2, log = TRUE))
+}
+
+dev2 <- function(param) -2 * ll2(param)
+
+optim(c(1,1), dev2)
+```
+
+We can verify that the estimates are not dependent on the initial state:
+```{r, verif}
+optim(c(0.5,20), dev2)
+```
