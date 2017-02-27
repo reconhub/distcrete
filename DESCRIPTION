@@ -11,6 +11,7 @@ BugReports: https://github.com/reconhub/distcrete/issues
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown, 
+    ggplot2
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
