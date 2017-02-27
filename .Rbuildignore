@@ -6,3 +6,4 @@
 ^appveyor.yml$
 ^\.travis\.yml$
 ^update_web\.sh$
+^appveyor\.yml$
