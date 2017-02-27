@@ -29,4 +29,3 @@ Discretise a distribution.
 \author{
 Rich FitzJohn
 }
-

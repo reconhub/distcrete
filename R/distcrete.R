@@ -82,7 +82,7 @@ distcrete_q <- function(d, p, log = FALSE) {
 ## TODO: consider a lower/uppper argument to _q so that this
 ## (+interval-interval) bit can be avoided...
 distcrete_r <- function(d, n = 1, ...) {
-  distcrete_q(d, runif(n)) + d$interval
+  distcrete_q(d, stats::runif(n)) + d$interval
 }
 
 ##' @export
