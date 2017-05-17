@@ -1,6 +1,6 @@
 ## ---
 ## title: "distcrete"
-## author: "Rich FitzJohn"
+## author: "Rich FitzJohn, Thibaut Jombart"
 ## date: "`r Sys.Date()`"
 ## output: rmarkdown::html_vignette
 ## vignette: >
@@ -20,8 +20,23 @@ set.seed(1)
 
 ## ## Why?
 
-## This vignette needs a narative angle added by someone who
-## understands how these models are used in practice
+## The discrete observation of continuous processes is fairly frequent in a
+## range of fields including biology, ecology, and epidemiology. This is
+## typically the case when recording the dates of events as days, weeks, or
+## months, thereby altering the distribution of delays between these events. Let
+## us imagine that events are recorded per day. Two events happening on the same
+## day at 10am and 10pm would result in an observed delay of 0 days (while the
+## actual delay is 12h), while two events happening 2h hours apart, at 11pm
+## first and at 1am on the next day, would be seen as 1 day apart.
+
+
+## Because of such potential biases, discretisation needs to be taken into
+## account when fitting distributions of discretised quantities (such as
+## delays), as well as when simulating them. Quite often, existing discrete
+## distributions are not sufficient to obtain a good fit of discretised
+## data. **`distcrete`** provides an alternative by implementing a general
+## approach for discretising continuous distributions.
+
 
 ## ## How it works
 

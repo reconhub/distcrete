@@ -1,6 +1,6 @@
 ---
 title: "distcrete"
-author: "Rich FitzJohn"
+author: "Rich FitzJohn, Thibaut Jombart"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -21,8 +21,23 @@ set.seed(1)
 
 ## Why?
 
-This vignette needs a narative angle added by someone who
-understands how these models are used in practice
+The discrete observation of continuous processes is fairly frequent in a
+range of fields including biology, ecology, and epidemiology. This is
+typically the case when recording the dates of events as days, weeks, or
+months, thereby altering the distribution of delays between these events. Let
+us imagine that events are recorded per day. Two events happening on the same
+day at 10am and 10pm would result in an observed delay of 0 days (while the
+actual delay is 12h), while two events happening 2h hours apart, at 11pm
+first and at 1am on the next day, would be seen as 1 day apart.
+
+
+Because of such potential biases, discretisation needs to be taken into
+account when fitting distributions of discretised quantities (such as
+delays), as well as when simulating them. Quite often, existing discrete
+distributions are not sufficient to obtain a good fit of discretised
+data. **`distcrete`** provides an alternative by implementing a general
+approach for discretising continuous distributions.
+
 
 ## How it works
 
@@ -82,6 +97,7 @@ legend("topright", c("w = 0", "w = 0.5"), bty = "n", fill = col)
 ```
 
 Summed over all 'x', these two distributions will both equal 1
+(using 100 as "close enough" to infinity here)
 ``` {r }
 sum(d0$d(0:100))
 sum(d1$d(0:100))
@@ -143,7 +159,7 @@ density function of the underlying continuous distribution
 ``` {r }
 par(mar=c(4.1, 4.1, 0.5, 0.5))
 curve(pgamma(x, 3), 0, 10, n = 301, col = NA,
-      xlab = "x", ylab = "Probability density", las = 1)
+      xlab = "x", ylab = "Cumulative probability", las = 1)
 at <- 0:10
 cols <- colorRampPalette(c("navy", "dodgerblue2"))(length(at))
 for (i in seq_along(at)[-1]) {
@@ -155,22 +171,7 @@ for (i in seq_along(at)[-1]) {
 curve(pgamma(x, 3), 0, 10, n = 301, add = TRUE)
 ```
 
-and with `w = 0.5`
-``` {r echo = FALSE}
-par(mar=c(4.1, 4.1, 0.5, 0.5))
-curve(pgamma(x, 3), 0, 10, n = 301, col = NA,
-      xlab = "x", ylab = "Probability density", las = 1)
-at <- c(0, 0:9 + 0.5, 10)
-cols <- colorRampPalette(c("navy", "dodgerblue2"))(length(at))
-for (i in seq_along(at)[-1]) {
-  xx <- seq(at[i - 1], at[i], length.out = 21)
-  polygon(c(xx, rev(xx)),
-          c(pgamma(xx, 3), rep(0, length(xx))), col = cols[i],
-          border = "grey")
-}
-curve(pgamma(x, 3), 0, 10, n = 301, add = TRUE)
-```
-
+(this is with `w = 0`)
 
 ### Probability density function to probability mass function
 
