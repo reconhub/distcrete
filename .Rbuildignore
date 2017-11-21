@@ -8,3 +8,5 @@
 ^update_web\.sh$
 ^appveyor\.yml$
 ^misc/*
+^README\.Rmd$
+^README-.*\.png$
