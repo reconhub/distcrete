@@ -116,8 +116,12 @@ We create a log-likelihood function for these data, as well as a deviance (it
 is easier to minimise the deviance with `optim`):
 ``` {r ll_gamma}
 ll2 <- function(param) {
-   d <- distcrete("gamma", interval = 1L, param[1], param[2])$d
-   sum(d(sim2, log = TRUE))
+  if (param[[2]] <= 0) { # really, the '=' part is contentious...
+    -Inf
+  } else {
+    d <- distcrete("gamma", interval = 1L, param[1], param[2])$d
+    sum(d(sim2, log = TRUE))
+  }
 }
 
 dev2 <- function(param) -2 * ll2(param)

@@ -107,8 +107,12 @@ plot(table(sim2), lwd = 10, xlab = "x", ylab = "Frequency",
 ## is easier to minimise the deviance with `optim`):
 ##+ ll_gamma
 ll2 <- function(param) {
-   d <- distcrete("gamma", interval = 1L, param[1], param[2])$d
-   sum(d(sim2, log = TRUE))
+  if (param[[2]] <= 0) { # really, the '=' part is contentious...
+    -Inf
+  } else {
+    d <- distcrete("gamma", interval = 1L, param[1], param[2])$d
+    sum(d(sim2, log = TRUE))
+  }
 }
 
 dev2 <- function(param) -2 * ll2(param)
