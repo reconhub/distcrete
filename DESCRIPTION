@@ -1,8 +1,11 @@
 Package: distcrete
 Title: Disrcrete Distribution Approximations
 Version: 0.0.1
-Author: Rich FitzJohn
-Maintainer: Rich FitzJohn <rich.fitzjohn@gmail.com>
+Authors@R: c(
+      person("Rich", "FitzJohn", role = c("aut", "cre"),
+             email = "rich.fitzjohn@gmail.com"),
+      person("Anne", "Cori", role = "aut"),
+      person("Thibaut", "Jombart", role = "aut"))
 Description: Discrete approximations of continuous distributions.
 License: MIT + file LICENSE
 LazyData: true
