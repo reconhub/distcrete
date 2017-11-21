@@ -1,4 +1,4 @@
-# distcrete 0.1.0
+# distcrete 1.0.0
 
 * First release
 
