@@ -2,7 +2,7 @@
 ##' @title Discretise a distribution
 ##' @param name The name of a distribution function (e.g.,
 ##'   \code{norm}, \code{gamma}).  The distribution must have a cdf
-##'   function (e.g., \code{pnorm}) and a qualtile function (e.g.,
+##'   function (e.g., \code{pnorm}) and a quantile function (e.g.,
 ##'   \code{qnorm}) defined.
 ##'
 ##' @param interval The interval to discretise the interval onto.
@@ -17,6 +17,13 @@
 ##' @param anchor Any location that is a valid \code{x}
 ##' @export
 ##' @author Rich FitzJohn
+##' @examples 
+##' set.seed(415)
+##' d0 <- distcrete::distcrete("gamma", 1, shape = 3, w = 0)
+##' d0$d(1:10)
+##' d0$p(c(.1,.5))
+##' d0$q(c(.1,.5))
+##' d0$r(10)
 distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {
   ## TODO: the offset / reverse parts should be done against the
   ## returned objects because they alter only the range?

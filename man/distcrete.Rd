@@ -9,7 +9,7 @@ distcrete(name, interval, ..., w = 0.5, anchor = 0)
 \arguments{
 \item{name}{The name of a distribution function (e.g.,
 \code{norm}, \code{gamma}).  The distribution must have a cdf
-function (e.g., \code{pnorm}) and a qualtile function (e.g.,
+function (e.g., \code{pnorm}) and a quantile function (e.g.,
 \code{qnorm}) defined.}
 
 \item{interval}{The interval to discretise the interval onto.}
@@ -25,6 +25,14 @@ floor, if 1 then ceiling.}
 }
 \description{
 Discretise a distribution.
+}
+\examples{
+set.seed(415)
+d0 <- distcrete::distcrete("gamma", 1, shape = 3, w = 0)
+d0$d(1:10)
+d0$p(c(.1,.5))
+d0$q(c(.1,.5))
+d0$r(10)
 }
 \author{
 Rich FitzJohn

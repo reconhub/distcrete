@@ -103,7 +103,7 @@ sum(d0$d(0:100))
 sum(d1$d(0:100))
 ```
 
-but the way that probability distribution is spready over the
+but the way that probability distribution is spread over the
 discrete 'x' locations differs.
 
 ### Cumulative density function

@@ -1,8 +1,10 @@
 Package: distcrete
-Title: Disrcrete Distribution Approximations
-Version: 0.0.1
+Title: Discrete Distribution Approximations
+Version: 1.0.0
 Authors@R: c(
-      person("Rich", "FitzJohn", role = c("aut", "cre"),
+      person("Steph","Locke", role="cre",
+             email = "steph@itsalocke.com"),
+      person("Rich", "FitzJohn", role = c("aut"),
              email = "rich.fitzjohn@gmail.com"),
       person("Anne", "Cori", role = "aut"),
       person("Thibaut", "Jombart", role = "aut"))
