@@ -24,26 +24,7 @@
 #' d0$p(c(.1,.5))
 #' d0$q(c(.1,.5))
 #' d0$r(10)
-#' 
-#' @details {
-#' \itemize{
-#'\item
-#'\eqn{x_{c}}: a random variable with a known continous distribution, with
-#'\eqn{f_{c}} its p.d.f and \eqn{F_{c}} the corresponding c.d.f.
-#'\item
-#'\eqn{x_{d}}: a random variable following a discrete distribution derived
-#'from \eqn{f_{c}}
-#'}
-#'
-#'The p.m.f. of \eqn{x_{d}} is defined for any discrete value \eqn{X} by: 
-#'  \deqn{
-#'    p(x_{d} = X) = p(x_{c} \in \left[X - (wi/2) ; X + (wi/2)\left[) = F_c(X + wi/2) - F_c(X - wi/2)
-#'   } where \eqn{i} is the width of the discretising interval, and \#'(w} is
-#'an offset describing how continuous values are mapped onto a discrete
-#'scale. For instance, with \eqn{i = 1} and \eqn{w = 0.5}, any values on
-#'\eqn{\left[2.5 ; 3.5\left[} are mapped to 2; for \eqn{i = 1} and \eqn{w = 0\
-#'), any values on \eqn{\left[1 ; 2\left[} is mapped to \eqn{1}.
-#'}
+
 
 
 distcrete <- function(name, interval, ..., w = 0.5, anchor = 0) {

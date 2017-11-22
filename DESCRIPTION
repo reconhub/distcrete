@@ -1,6 +1,6 @@
 Package: distcrete
 Title: Discrete Distribution Approximations
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
       person("Steph","Locke", role="cre",
              email = "steph@itsalocke.com"),
@@ -14,7 +14,7 @@ Description: Creates discretised versions of continuous
       frequency of discretisation, a valid discretisation 
       point, and an integration range. For a review of 
       discretisation methods, see 
-      Chakraborty (2015) <doi: https://doi.org/10.1186/s40488-015-0028-6>.
+      Chakraborty (2015) <doi:10.1186/s40488-015-0028-6>.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/reconhub/distcrete

@@ -1,13 +1,8 @@
 This is a re-submission of a new package.
 
 ## Resubmission
-Uwe wrote:
-
-> Thanks. Any details about the methods? Is there some reference about the
-> method you can add in the Description field in the form Authors (year)
-> <doi:.....>?
-
-We have improved the description field per this feedback.
+DOI was incorrectly referenced - now fixed.
+Some documentation was throwing LaTeX errors - removed.
 
 ## R CMD check results
 
