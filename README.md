@@ -3,7 +3,7 @@
 distcrete
 =========
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![](http://cranlogs.r-pkg.org/badges/distcrete)](http://cran.rstudio.com/packages=distcrete)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 [![Travis-CI Build Status](https://travis-ci.org/reconhub/distcrete.svg?branch=master)](https://travis-ci.org/reconhub/distcrete) [![Build status](https://ci.appveyor.com/api/projects/status/uy5out71p9qkh93i/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/distcrete/branch/master) [![codecov.io](https://codecov.io/github/reconhub/distcrete/coverage.svg?branch=master)](https://codecov.io/github/reconhub/distcrete?branch=master)
 
