@@ -54,6 +54,8 @@ vignettes: vignettes/distcrete.Rmd vignettes/ml.Rmd
 	mkdir -p inst/doc
 	cp vignettes/*.html vignettes/*.Rmd inst/doc
 
-website:
-  ${RSCRIPT} -e "pkgdown::build_site()"
+pkgdown:
+	${RSCRIPT} -e "pkgdown::build_site()"
+
+website: pkgdown
 	./update_web.sh

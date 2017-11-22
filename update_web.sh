@@ -5,6 +5,7 @@ DOCS_DIR=docs
 VERSION=$(git rev-parse --short HEAD)
 REMOTE_URL=$(git config --get remote.origin.url)
 
+mkdir -p ${DOCS_DIR}
 rm -rf ${DOCS_DIR}/.git
 git init ${DOCS_DIR}
 git -C ${DOCS_DIR} checkout --orphan gh-pages
