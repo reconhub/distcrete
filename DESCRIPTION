@@ -8,7 +8,13 @@ Authors@R: c(
              email = "rich.fitzjohn@gmail.com"),
       person("Anne", "Cori", role = "aut"),
       person("Thibaut", "Jombart", role = "aut"))
-Description: Discrete approximations of continuous distributions.
+Description: Creates discretised versions of continuous 
+      distribution functions by mapping continuous values 
+      to an underlying discrete grid, based on a (uniform) 
+      frequency of discretisation, a valid discretisation 
+      point, and an integration range. For a review of 
+      discretisation methods, see 
+      Chakraborty (2015) <doi: https://doi.org/10.1186/s40488-015-0028-6>.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/reconhub/distcrete
