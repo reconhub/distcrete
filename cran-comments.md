@@ -1,8 +1,7 @@
 This is a re-submission of a new package.
 
 ## Resubmission
-DOI was incorrectly referenced - now fixed.
-Some documentation was throwing LaTeX errors - removed.
+Modified the example to use `library()` rather than namespace
 
 ## R CMD check results
 
